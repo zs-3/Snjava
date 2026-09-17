@@ -1,0 +1,143 @@
+.class Lorg/fortheloss/sticknodes/animationscreen/modules/tooltables/CreationModeToolTable$6;
+.super Lcom/badlogic/gdx/scenes/scene2d/utils/ClickListener;
+.source "CreationModeToolTable.java"
+
+
+# annotations
+.annotation system Ldalvik/annotation/EnclosingMethod;
+    value = Lorg/fortheloss/sticknodes/animationscreen/modules/tooltables/CreationModeToolTable;->initialize(Lcom/badlogic/gdx/graphics/g2d/TextureAtlas;Lcom/badlogic/gdx/graphics/g2d/TextureAtlas;Lcom/badlogic/gdx/scenes/scene2d/utils/Drawable;)V
+.end annotation
+
+.annotation system Ldalvik/annotation/InnerClass;
+    accessFlags = 0x0
+    name = null
+.end annotation
+
+
+# instance fields
+.field final synthetic this$0:Lorg/fortheloss/sticknodes/animationscreen/modules/tooltables/CreationModeToolTable;
+
+
+# direct methods
+.method constructor <init>(Lorg/fortheloss/sticknodes/animationscreen/modules/tooltables/CreationModeToolTable;)V
+    .locals 0
+
+    .line 209
+    iput-object p1, p0, Lorg/fortheloss/sticknodes/animationscreen/modules/tooltables/CreationModeToolTable$6;->this$0:Lorg/fortheloss/sticknodes/animationscreen/modules/tooltables/CreationModeToolTable;
+
+    invoke-direct {p0}, Lcom/badlogic/gdx/scenes/scene2d/utils/ClickListener;-><init>()V
+
+    return-void
+.end method
+
+
+# virtual methods
+.method public touchUp(Lcom/badlogic/gdx/scenes/scene2d/InputEvent;FFII)V
+    .locals 0
+
+    .line 212
+    invoke-super/range {p0 .. p5}, Lcom/badlogic/gdx/scenes/scene2d/utils/ClickListener;->touchUp(Lcom/badlogic/gdx/scenes/scene2d/InputEvent;FFII)V
+
+    const/high16 p1, -0x31800000
+
+    cmpg-float p1, p2, p1
+
+    if-lez p1, :cond_4
+
+    if-nez p4, :cond_4
+
+    .line 213
+    invoke-virtual {p0}, Lcom/badlogic/gdx/scenes/scene2d/utils/ClickListener;->getTouchDownX()F
+
+    move-result p1
+
+    invoke-virtual {p0}, Lcom/badlogic/gdx/scenes/scene2d/utils/ClickListener;->getTouchDownY()F
+
+    move-result p4
+
+    invoke-static {p1, p4, p2, p3}, Lorg/fortheloss/sticknodes/animationscreen/modules/tooltables/ToolTable;->tapDelta(FFFF)Z
+
+    move-result p1
+
+    if-nez p1, :cond_0
+
+    goto :goto_1
+
+    .line 216
+    :cond_0
+    iget-object p1, p0, Lorg/fortheloss/sticknodes/animationscreen/modules/tooltables/CreationModeToolTable$6;->this$0:Lorg/fortheloss/sticknodes/animationscreen/modules/tooltables/CreationModeToolTable;
+
+    invoke-static {p1}, Lorg/fortheloss/sticknodes/animationscreen/modules/tooltables/CreationModeToolTable;->-$$Nest$fget_canvasModuleRef(Lorg/fortheloss/sticknodes/animationscreen/modules/tooltables/CreationModeToolTable;)Lorg/fortheloss/sticknodes/animationscreen/modules/CanvasModule;
+
+    move-result-object p1
+
+    invoke-virtual {p1}, Lorg/fortheloss/sticknodes/animationscreen/modules/CanvasModule;->isTracingFrame()Z
+
+    move-result p1
+
+    if-nez p1, :cond_1
+
+    return-void
+
+    .line 219
+    :cond_1
+    iget-object p1, p0, Lorg/fortheloss/sticknodes/animationscreen/modules/tooltables/CreationModeToolTable$6;->this$0:Lorg/fortheloss/sticknodes/animationscreen/modules/tooltables/CreationModeToolTable;
+
+    iget-object p1, p1, Lorg/fortheloss/sticknodes/animationscreen/modules/tooltables/ToolTable;->_creationToolsModuleRef:Lorg/fortheloss/sticknodes/animationscreen/modules/CreateToolsModule;
+
+    invoke-virtual {p1}, Lorg/fortheloss/sticknodes/animationscreen/modules/CreateToolsModule;->getLastSelectedFrameIndexToTrace()I
+
+    move-result p1
+
+    add-int/lit8 p1, p1, -0x1
+
+    const/4 p2, 0x0
+
+    if-gez p1, :cond_2
+
+    const/4 p1, 0x0
+
+    goto :goto_0
+
+    .line 224
+    :cond_2
+    iget-object p3, p0, Lorg/fortheloss/sticknodes/animationscreen/modules/tooltables/CreationModeToolTable$6;->this$0:Lorg/fortheloss/sticknodes/animationscreen/modules/tooltables/CreationModeToolTable;
+
+    iget-object p3, p3, Lorg/fortheloss/sticknodes/animationscreen/modules/tooltables/ToolTable;->_projectDataRef:Lorg/fortheloss/sticknodes/data/ProjectData;
+
+    iget-object p3, p3, Lorg/fortheloss/sticknodes/animationscreen/FramesContainer;->frames:Ljava/util/ArrayList;
+
+    invoke-virtual {p3}, Ljava/util/ArrayList;->size()I
+
+    move-result p3
+
+    add-int/lit8 p3, p3, -0x1
+
+    if-le p1, p3, :cond_3
+
+    .line 225
+    iget-object p1, p0, Lorg/fortheloss/sticknodes/animationscreen/modules/tooltables/CreationModeToolTable$6;->this$0:Lorg/fortheloss/sticknodes/animationscreen/modules/tooltables/CreationModeToolTable;
+
+    iget-object p1, p1, Lorg/fortheloss/sticknodes/animationscreen/modules/tooltables/ToolTable;->_projectDataRef:Lorg/fortheloss/sticknodes/data/ProjectData;
+
+    iget-object p1, p1, Lorg/fortheloss/sticknodes/animationscreen/FramesContainer;->frames:Ljava/util/ArrayList;
+
+    invoke-virtual {p1}, Ljava/util/ArrayList;->size()I
+
+    move-result p1
+
+    add-int/lit8 p1, p1, -0x1
+
+    .line 227
+    :cond_3
+    :goto_0
+    iget-object p3, p0, Lorg/fortheloss/sticknodes/animationscreen/modules/tooltables/CreationModeToolTable$6;->this$0:Lorg/fortheloss/sticknodes/animationscreen/modules/tooltables/CreationModeToolTable;
+
+    iget-object p3, p3, Lorg/fortheloss/sticknodes/animationscreen/modules/tooltables/ToolTable;->_creationToolsModuleRef:Lorg/fortheloss/sticknodes/animationscreen/modules/CreateToolsModule;
+
+    invoke-virtual {p3, p1, p2}, Lorg/fortheloss/sticknodes/animationscreen/modules/CreateToolsModule;->setFrameIndexToTrace(IZ)V
+
+    :cond_4
+    :goto_1
+    return-void
+.end method

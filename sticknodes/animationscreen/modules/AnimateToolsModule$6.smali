@@ -1,0 +1,51 @@
+.class Lorg/fortheloss/sticknodes/animationscreen/modules/AnimateToolsModule$6;
+.super Lorg/fortheloss/sticknodes/animationscreen/dialogs/LeavingAppDialog;
+.source "AnimateToolsModule.java"
+
+
+# annotations
+.annotation system Ldalvik/annotation/EnclosingMethod;
+    value = Lorg/fortheloss/sticknodes/animationscreen/modules/AnimateToolsModule;->getPro()V
+.end annotation
+
+.annotation system Ldalvik/annotation/InnerClass;
+    accessFlags = 0x0
+    name = null
+.end annotation
+
+
+# instance fields
+.field final synthetic this$0:Lorg/fortheloss/sticknodes/animationscreen/modules/AnimateToolsModule;
+
+
+# direct methods
+.method constructor <init>(Lorg/fortheloss/sticknodes/animationscreen/modules/AnimateToolsModule;Lorg/fortheloss/sticknodes/animationscreen/AnimationScreen;)V
+    .locals 0
+
+    .line 927
+    iput-object p1, p0, Lorg/fortheloss/sticknodes/animationscreen/modules/AnimateToolsModule$6;->this$0:Lorg/fortheloss/sticknodes/animationscreen/modules/AnimateToolsModule;
+
+    invoke-direct {p0, p2}, Lorg/fortheloss/sticknodes/animationscreen/dialogs/LeavingAppDialog;-><init>(Lorg/fortheloss/sticknodes/animationscreen/AnimationScreen;)V
+
+    return-void
+.end method
+
+
+# virtual methods
+.method protected onConfirmLeaveApp()V
+    .locals 2
+
+    .line 930
+    sget-object v0, Lorg/fortheloss/sticknodes/App;->platform:Lorg/fortheloss/framework/IPlatform;
+
+    const-string v1, "click_pro_menu"
+
+    invoke-interface {v0, v1}, Lorg/fortheloss/framework/IPlatform;->analyticsSendSingle(Ljava/lang/String;)V
+
+    .line 931
+    sget-object v0, Lorg/fortheloss/sticknodes/App;->platform:Lorg/fortheloss/framework/IPlatform;
+
+    invoke-interface {v0}, Lorg/fortheloss/framework/IPlatform;->onUnlockClick()V
+
+    return-void
+.end method
