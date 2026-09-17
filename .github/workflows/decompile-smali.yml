@@ -1,0 +1,144 @@
+name: Decompile StickNodes Smali to Java
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  decompile:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Download JADX
+        run: |
+          JADX_VERSION="1.5.3"
+
+          wget -q \
+            "https://github.com/skylot/jadx/releases/download/v${JADX_VERSION}/jadx-${JADX_VERSION}.zip" \
+            -O jadx.zip
+
+          unzip -q jadx.zip -d jadx
+          chmod +x jadx/bin/jadx
+
+      - name: Check StickNodes files
+        run: |
+          echo "Smali files found:"
+          find sticknodes -type f -name "*.smali" | wc -l
+
+          echo ""
+          echo "StickNodes directory:"
+          du -sh sticknodes
+
+      - name: Prepare output directory
+        run: |
+          rm -rf sticknodes-java
+          mkdir -p sticknodes-java
+
+      - name: Convert Smali to DEX
+        run: |
+          mkdir -p smali-build
+
+          echo "Assembling Smali files..."
+
+          find sticknodes -type f -name "*.smali" > smali-files.txt
+
+          java -version
+
+          echo "Total Smali files:"
+          wc -l smali-files.txt
+
+      - name: Install smali
+        run: |
+          SMALI_VERSION="2.5.2"
+
+          wget -q \
+            "https://github.com/google/smali/releases/download/v${SMALI_VERSION}/smali-${SMALI_VERSION}.jar" \
+            -O smali.jar
+
+      - name: Assemble Smali
+        run: |
+          java -jar smali.jar assemble \
+            sticknodes \
+            -o smali-build/classes.dex
+
+          ls -lh smali-build/classes.dex
+
+      - name: Decompile DEX to Java
+        run: |
+          ./jadx/bin/jadx \
+            --output-dir sticknodes-java \
+            --show-bad-code \
+            smali-build/classes.dex
+
+      - name: Create conversion report
+        run: |
+          echo "# StickNodes Smali → Java Conversion" > conversion-report.md
+          echo "" >> conversion-report.md
+
+          echo "## Source" >> conversion-report.md
+          echo "" >> conversion-report.md
+
+          echo "- Smali files: $(find sticknodes -type f -name '*.smali' | wc -l)" >> conversion-report.md
+          echo "- Java files: $(find sticknodes-java -type f -name '*.java' | wc -l)" >> conversion-report.md
+          echo "" >> conversion-report.md
+
+          echo "## Java output" >> conversion-report.md
+          echo "" >> conversion-report.md
+
+          find sticknodes-java -type f -name "*.java" | sort >> conversion-report.md
+
+      - name: Show result
+        run: |
+          echo "======================================"
+          echo "CONVERSION COMPLETE"
+          echo "======================================"
+
+          echo "Smali files:"
+          find sticknodes -type f -name "*.smali" | wc -l
+
+          echo "Java files:"
+          find sticknodes-java -type f -name "*.java" | wc -l
+
+          echo ""
+          echo "Output size:"
+          du -sh sticknodes-java
+
+          echo ""
+          echo "First Java files:"
+          find sticknodes-java -type f -name "*.java" | sort | head -30
+
+      - name: Remove temporary files
+        run: |
+          rm -rf jadx
+          rm -f jadx.zip
+          rm -f smali.jar
+          rm -rf smali-build
+          rm -f smali-files.txt
+
+      - name: Commit Java source
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add sticknodes-java conversion-report.md
+
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+
+          git commit -m "Decompile StickNodes Smali to Java"
+          git push
